@@ -19,7 +19,7 @@ function Home() {
         </ul>
  
         <div className="nav-actions">
-          <a href="#" className="btn btn-outline">Log In</a>
+          <Link to="/login" className="btn btn-outline">Log In</Link>
           <Link to="/create-account" className="btn btn-solid">Create Account</Link>
         </div>
       </nav>

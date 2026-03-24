@@ -1,17 +1,18 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import './CreateAcc.css'
-// import { supabase } from './lib/supabase'   ← uncomment when ready
+import { supabase } from './lib/supabase'
 
 export default function CreateAccount() {
   const navigate = useNavigate()
 
-  const [fullName, setFullName]   = useState('')
-  const [email, setEmail]         = useState('')
-  const [password, setPassword]   = useState('')
-  const [confirm, setConfirm]     = useState('')
-  const [error, setError]         = useState(null)
-  const [loading, setLoading]     = useState(false)
+  const [fullName, setFullName] = useState('')
+  const [email, setEmail]       = useState('')
+  const [password, setPassword] = useState('')
+  const [confirm, setConfirm]   = useState('')
+  const [error, setError]       = useState(null)
+  const [loading, setLoading]   = useState(false)
+  const [success, setSuccess]   = useState(false)  // ← controls banner
 
   async function handleSignUp(e) {
     e.preventDefault()
@@ -28,17 +29,17 @@ export default function CreateAccount() {
 
     setLoading(true)
 
-    // ── Supabase sign-up (uncomment when ready) ──
-    // const { error: signUpError } = await supabase.auth.signUp({
-    //   email,
-    //   password,
-    //   options: { data: { full_name: fullName } }
-    // })
-    // if (signUpError) { setError(signUpError.message); setLoading(false); return }
+    const { error: signUpError } = await supabase.auth.signUp({
+      email,
+      password,
+      options: { data: { full_name: fullName } }
+    })
 
-    // Placeholder navigation — replace with real logic
-    console.log('Sign up:', { fullName, email })
-    navigate('/')
+    if (signUpError) {
+      setError(signUpError.message)
+    } else {
+      setSuccess(true)  // ← show the banner
+    }
 
     setLoading(false)
   }
@@ -47,6 +48,20 @@ export default function CreateAccount() {
     <div className="create-account-page">
       <div className="bg-layer" />
 
+      {/* ── Success Banner ── */}
+      {success && (
+        <div className="ca-success-banner">
+          <div className="ca-success-icon">✓</div>
+          <div className="ca-success-text">
+            <strong>Account created!</strong>
+            <span>We sent a confirmation email to <em>{email}</em>. Click the link inside to activate your account.</span>
+          </div>
+          <button className="ca-success-close" onClick={() => navigate('/login')}>
+            Go to Log In →
+          </button>
+        </div>
+      )}
+
       {/* Navbar */}
       <nav className="navbar">
         <Link to="/" className="nav-logo">ClubHub</Link>
@@ -54,7 +69,7 @@ export default function CreateAccount() {
 
       {/* Card */}
       <main className="ca-main">
-        <div className="ca-card">
+        <div className={`ca-card ${success ? 'ca-card--dimmed' : ''}`}>
 
           <div className="ca-header">
             <span className="ca-eyebrow">Get started</span>
@@ -116,7 +131,7 @@ export default function CreateAccount() {
 
             {error && <p className="ca-error">{error}</p>}
 
-            <button className="ca-submit" type="submit" disabled={loading}>
+            <button className="ca-submit" type="submit" disabled={loading || success}>
               {loading ? 'Creating account...' : 'Create Account'}
             </button>
 
