@@ -19,6 +19,7 @@ function Home() {
         </ul>
  
         <div className="nav-actions">
+          <Link to="/clubs" className="btn btn-solid">Clubs List</Link>
           <Link to="/login" className="btn btn-outline">Log In</Link>
           <Link to="/create-account" className="btn btn-solid">Create Account</Link>
         </div>
@@ -32,7 +33,7 @@ function Home() {
           CLUB
           <br />
           HUB
-          <span className="hero-sub">Where Members Meet</span>
+          <span className="hero-sub">A new way to manage your club</span>
         </h1>
  
         <p className="hero-body">

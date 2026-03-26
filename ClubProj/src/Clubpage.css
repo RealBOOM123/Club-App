@@ -1,0 +1,211 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&display=swap');
+
+.club-page {
+  --green-dark: #0d3d2b;
+  --green-mid:  #145c3e;
+  --gold:       #f5c842;
+  --gold-light: #fde88a;
+  --cream:      #fdf6e3;
+
+  font-family: 'DM Sans', sans-serif;
+  background: var(--green-dark);
+  color: var(--cream);
+  min-height: 100vh;
+  overflow-x: hidden;
+  position: relative;
+}
+
+.club-page .bg-layer {
+  position: fixed; inset: 0;
+  background:
+    radial-gradient(ellipse 80% 60% at 10% 20%, rgba(26,107,72,0.5) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 80% at 90% 80%, rgba(20,92,62,0.4) 0%, transparent 60%);
+  pointer-events: none; z-index: 0;
+}
+
+.club-page .navbar {
+  position: sticky; top: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 1rem 3rem;
+  background: rgba(13,61,43,0.85);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(245,200,66,0.15);
+}
+
+.club-page .nav-logo {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.8rem; letter-spacing: 0.08em;
+  color: var(--gold); text-decoration: none;
+}
+
+.club-page .nav-actions { display: flex; gap: 0.75rem; }
+
+/* ── Main ── */
+.club-main {
+  position: relative; z-index: 1;
+  padding: 4rem 3rem;
+  max-width: 960px; margin: 0 auto;
+}
+
+/* ── Hero ── */
+.club-hero {
+  display: flex; gap: 2.5rem; align-items: flex-start;
+  margin-bottom: 3rem;
+  animation: fadeUp 0.6s ease both;
+}
+
+.club-hero-img {
+  flex-shrink: 0;
+  width: 200px; height: 200px;
+  border-radius: 16px; overflow: hidden;
+  border: 1px solid rgba(245,200,66,0.2);
+  background: rgba(13,61,43,0.8);
+}
+
+.club-hero-img img {
+  width: 100%; height: 100%; object-fit: cover;
+}
+
+.club-hero-placeholder {
+  width: 100%; height: 100%;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 5rem; color: rgba(245,200,66,0.3);
+}
+
+.club-hero-info { flex: 1; }
+
+.club-name {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
+  color: var(--gold); letter-spacing: 0.04em;
+  line-height: 1; margin: 0.3rem 0 0.75rem;
+}
+
+.club-desc {
+  font-size: 0.95rem; font-weight: 300;
+  color: rgba(253,246,227,0.6); line-height: 1.7;
+  max-width: 520px; margin: 0 0 1.25rem;
+}
+
+.club-meta {
+  display: flex; align-items: center; gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.club-meta-item {
+  font-size: 0.82rem; color: rgba(253,246,227,0.5);
+}
+
+.club-meta-dot {
+  width: 3px; height: 3px; border-radius: 50%;
+  background: rgba(245,200,66,0.3);
+}
+
+.club-actions { display: flex; gap: 0.75rem; }
+
+/* ── Divider ── */
+.club-page .divider {
+  width: 100%; height: 1px; margin: 0 0 3rem;
+  background: linear-gradient(to right, transparent, rgba(245,200,66,0.3), transparent);
+}
+
+/* ── Events ── */
+.club-events { animation: fadeUp 0.6s 0.15s ease both; }
+
+.club-section-header {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 1.5rem;
+}
+
+.club-section-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 2rem; letter-spacing: 0.05em;
+  color: var(--cream); margin: 0;
+}
+
+.club-empty {
+  color: rgba(253,246,227,0.35); font-size: 0.9rem;
+  padding: 2rem 0;
+}
+
+.events-list { display: flex; flex-direction: column; gap: 1rem; }
+
+.event-card {
+  display: flex; gap: 1.25rem; align-items: flex-start;
+  background: rgba(20,92,62,0.25);
+  border: 1px solid rgba(245,200,66,0.12);
+  border-radius: 12px; padding: 1.25rem 1.5rem;
+  transition: border-color 0.2s;
+}
+
+.event-card:hover { border-color: rgba(245,200,66,0.3); }
+
+.event-date-block {
+  flex-shrink: 0;
+  width: 52px;
+  display: flex; flex-direction: column; align-items: center;
+  background: rgba(245,200,66,0.1);
+  border: 1px solid rgba(245,200,66,0.2);
+  border-radius: 8px; padding: 0.4rem 0;
+}
+
+.event-month {
+  font-size: 0.65rem; font-weight: 600;
+  text-transform: uppercase; letter-spacing: 0.1em;
+  color: var(--gold);
+}
+
+.event-day {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.8rem; color: var(--gold);
+  line-height: 1.1;
+}
+
+.event-info { flex: 1; }
+
+.event-title {
+  font-size: 1rem; font-weight: 600;
+  color: var(--cream); margin: 0 0 0.3rem;
+}
+
+.event-desc {
+  font-size: 0.83rem; font-weight: 300;
+  color: rgba(253,246,227,0.55); line-height: 1.5;
+  margin: 0 0 0.5rem;
+}
+
+.event-meta {
+  display: flex; gap: 1rem; flex-wrap: wrap;
+  font-size: 0.78rem; color: rgba(253,246,227,0.4);
+}
+
+/* ── Buttons ── */
+.club-page .btn {
+  padding: 0.5rem 1.25rem; border-radius: 6px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.85rem; font-weight: 600;
+  cursor: pointer; transition: all 0.2s ease;
+  text-decoration: none; display: inline-block;
+}
+.club-page .btn-lg { padding: 0.75rem 1.75rem; font-size: 0.95rem; border-radius: 8px; }
+.club-page .btn-outline {
+  background: transparent; border: 1.5px solid var(--gold); color: var(--gold);
+}
+.club-page .btn-outline:hover { background: rgba(245,200,66,0.1); }
+.club-page .btn-solid {
+  background: var(--gold); border: 1.5px solid var(--gold); color: var(--green-dark);
+}
+.club-page .btn-solid:hover { background: var(--gold-light); }
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 640px) {
+  .club-page .navbar { padding: 1rem 1.25rem; }
+  .club-main { padding: 2rem 1.25rem; }
+  .club-hero { flex-direction: column; }
+  .club-hero-img { width: 100%; height: 200px; }
+}

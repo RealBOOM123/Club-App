@@ -53,6 +53,7 @@
   font-size: 0.88rem;
   font-weight: 500;
   color: rgba(253,246,227,0.7);
+  position: relative;
 }
 
 /* ── Toast ── */
@@ -173,4 +174,92 @@
   .dashboard-page .navbar { padding: 1rem 1.25rem; }
   .dash-main { padding: 2.5rem 1.25rem; }
   .dash-cards { flex-direction: column; }
+}
+
+.dash-section {
+  margin-top: 2.5rem;
+}
+
+.dash-section-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  opacity: 0.85;
+}
+
+.dash-section-loading,
+.dash-section-empty {
+  opacity: 0.5;
+  font-size: 0.95rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.dash-club-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 1rem;
+}
+
+.dash-club-card {
+  text-decoration: none;
+  color: inherit;
+  border-radius: 12px;
+  overflow: hidden;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.08);
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+
+.dash-club-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+}
+
+.dash-club-img {
+  width: 100%;
+  aspect-ratio: 16/9;
+  overflow: hidden;
+  background: rgba(255,255,255,0.05);
+}
+
+.dash-club-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.dash-club-img-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  opacity: 0.3;
+}
+
+.dash-club-info {
+  padding: 0.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.dash-club-category {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  opacity: 0.5;
+}
+
+.dash-club-name {
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.dash-club-members {
+  font-size: 0.8rem;
+  opacity: 0.5;
 }
