@@ -169,7 +169,12 @@ export default function ClubPage() {
           ) : (
             <div className="events-list">
               {events.map(event => (
-                <div className="event-card" key={event.id}>
+                <Link
+                  to={`/clubs/${id}/events/${event.id}`}
+                  className="event-card"
+                  key={event.id}
+                  style={{ textDecoration: 'none' }}
+                >
                   <div className="event-date-block">
                     <span className="event-month">
                       {event.date ? new Date(event.date).toLocaleString('en-US', { month: 'short' }) : '—'}
@@ -186,7 +191,7 @@ export default function ClubPage() {
                       <span>{formatDate(event.date)}</span>
                     </div>
                   </div>
-                </div>
+                </Link>
               ))}
             </div>
           )}

@@ -1,0 +1,245 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&display=swap');
+
+.form-page {
+  --green-dark: #0d3d2b;
+  --green-mid:  #145c3e;
+  --gold:       #f5c842;
+  --gold-light: #fde88a;
+  --cream:      #fdf6e3;
+  --red:        #e05c5c;
+
+  font-family: 'DM Sans', sans-serif;
+  background: var(--green-dark);
+  color: var(--cream);
+  min-height: 100vh;
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* ── BG ── */
+.fp-bg-layer {
+  position: fixed; inset: 0;
+  background:
+    radial-gradient(ellipse 80% 60% at 10% 20%, rgba(26,107,72,0.5) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 80% at 90% 80%, rgba(20,92,62,0.4) 0%, transparent 60%);
+  pointer-events: none; z-index: 0;
+}
+
+/* ── Loading ── */
+.fp-loading {
+  display: flex; align-items: center; justify-content: center;
+  min-height: 100vh;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.5rem; letter-spacing: 0.08em;
+  color: rgba(245,200,66,0.5);
+  background: var(--green-dark);
+}
+
+/* ── Navbar ── */
+.fp-navbar {
+  position: sticky; top: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 1rem 3rem;
+  background: rgba(13,61,43,0.85);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(245,200,66,0.15);
+}
+
+.fp-nav-logo {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.8rem; letter-spacing: 0.08em;
+  color: var(--gold); text-decoration: none;
+}
+
+.fp-nav-actions { display: flex; gap: 0.75rem; }
+
+/* ── Main ── */
+.fp-main {
+  position: relative; z-index: 1;
+  padding: 4rem 3rem;
+  max-width: 680px; margin: 0 auto;
+}
+
+/* ── Card ── */
+.fp-card {
+  background: rgba(20,92,62,0.18);
+  border: 1px solid rgba(245,200,66,0.12);
+  border-radius: 16px;
+  padding: 2.5rem;
+  animation: fp-fadeUp 0.5s ease both;
+}
+
+.fp-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 2.6rem; letter-spacing: 0.05em;
+  color: var(--gold); margin: 0 0 0.35rem;
+}
+
+.fp-subtitle {
+  font-size: 0.88rem; font-weight: 300;
+  color: rgba(253,246,227,0.45);
+  margin: 0 0 2rem;
+}
+
+/* ── Error ── */
+.fp-error {
+  background: rgba(224,92,92,0.12);
+  border: 1px solid rgba(224,92,92,0.3);
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  font-size: 0.85rem; color: #e05c5c;
+  margin-bottom: 1.5rem;
+}
+
+/* ── Form ── */
+.fp-form { display: flex; flex-direction: column; gap: 1.25rem; }
+
+.fp-field { display: flex; flex-direction: column; gap: 0.45rem; flex: 1; }
+
+.fp-row {
+  display: flex; gap: 1rem;
+}
+
+.fp-label {
+  font-size: 0.78rem; font-weight: 600;
+  text-transform: uppercase; letter-spacing: 0.1em;
+  color: rgba(253,246,227,0.5);
+}
+
+.fp-input {
+  background: rgba(13,61,43,0.5);
+  border: 1px solid rgba(245,200,66,0.15);
+  border-radius: 8px;
+  padding: 0.7rem 1rem;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.9rem; color: var(--cream);
+  transition: border-color 0.2s, background 0.2s;
+  width: 100%; box-sizing: border-box;
+  outline: none;
+}
+
+.fp-input::placeholder { color: rgba(253,246,227,0.25); }
+
+.fp-input:focus {
+  border-color: rgba(245,200,66,0.4);
+  background: rgba(13,61,43,0.7);
+}
+
+.fp-textarea { resize: vertical; min-height: 100px; line-height: 1.6; }
+
+.fp-select {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='rgba(245,200,66,0.5)' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  padding-right: 2.5rem;
+  cursor: pointer;
+}
+
+.fp-select option {
+  background: #0d3d2b; color: var(--cream);
+}
+
+/* Image preview */
+.fp-img-preview {
+  width: 100%; max-height: 180px; overflow: hidden;
+  border-radius: 10px;
+  border: 1px solid rgba(245,200,66,0.12);
+}
+
+.fp-img-preview img {
+  width: 100%; height: 180px; object-fit: cover; display: block;
+}
+
+/* ── Actions ── */
+.fp-actions {
+  display: flex; gap: 0.75rem; justify-content: flex-end;
+  padding-top: 0.5rem;
+}
+
+/* ── Danger zone ── */
+.fp-danger-zone {
+  margin-top: 2.5rem;
+  padding-top: 2rem;
+  border-top: 1px solid rgba(224,92,92,0.15);
+}
+
+.fp-danger-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.3rem; letter-spacing: 0.06em;
+  color: rgba(224,92,92,0.7); margin: 0 0 0.5rem;
+}
+
+.fp-danger-desc {
+  font-size: 0.82rem; font-weight: 300;
+  color: rgba(253,246,227,0.35); line-height: 1.6;
+  margin: 0 0 1rem;
+}
+
+.fp-cancel-del {
+  margin-left: 0.5rem;
+  font-size: 0.82rem;
+}
+
+/* ── Buttons ── */
+.form-page .btn, .fp-card .btn {
+  padding: 0.5rem 1.25rem; border-radius: 6px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.85rem; font-weight: 600;
+  cursor: pointer; transition: all 0.2s ease;
+  text-decoration: none; display: inline-block;
+  text-align: center;
+}
+
+.form-page .btn-outline, .fp-card .btn-outline {
+  background: transparent; border: 1.5px solid var(--gold); color: var(--gold);
+}
+.form-page .btn-outline:hover { background: rgba(245,200,66,0.1); }
+
+.form-page .btn-solid, .fp-card .btn-solid {
+  background: var(--gold); border: 1.5px solid var(--gold); color: var(--green-dark);
+}
+.form-page .btn-solid:hover { background: var(--gold-light); }
+.form-page .btn-solid:disabled { opacity: 0.6; cursor: not-allowed; }
+
+.form-page .btn-ghost, .fp-card .btn-ghost {
+  background: transparent; border: 1.5px solid rgba(253,246,227,0.15);
+  color: rgba(253,246,227,0.45);
+}
+.form-page .btn-ghost:hover { border-color: rgba(253,246,227,0.35); color: var(--cream); }
+
+.fp-card .btn-danger {
+  background: transparent; border: 1.5px solid rgba(224,92,92,0.35);
+  color: rgba(224,92,92,0.65);
+  padding: 0.5rem 1.25rem; border-radius: 6px;
+  font-family: 'DM Sans', sans-serif; font-size: 0.85rem; font-weight: 600;
+  cursor: pointer; transition: all 0.2s;
+}
+.fp-card .btn-danger:hover {
+  border-color: var(--red); color: var(--red);
+  background: rgba(224,92,92,0.08);
+}
+
+.fp-card .btn-danger-confirm {
+  background: rgba(224,92,92,0.15); border: 1.5px solid var(--red);
+  color: var(--red);
+  padding: 0.5rem 1.25rem; border-radius: 6px;
+  font-family: 'DM Sans', sans-serif; font-size: 0.85rem; font-weight: 600;
+  cursor: pointer; transition: all 0.2s;
+}
+
+/* ── Animation ── */
+@keyframes fp-fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Mobile ── */
+@media (max-width: 640px) {
+  .fp-navbar  { padding: 1rem 1.25rem; }
+  .fp-main    { padding: 2rem 1.25rem; }
+  .fp-card    { padding: 1.5rem; }
+  .fp-row     { flex-direction: column; }
+  .fp-actions { flex-direction: column-reverse; }
+  .fp-actions .btn { width: 100%; }
+}

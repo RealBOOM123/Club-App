@@ -6,6 +6,9 @@ import Dashboard     from './Dashboard.jsx'
 import Clubs         from './Clubs.jsx'
 import ClubPage      from './Clubpage.jsx'
 import NewClub       from './Newclub.jsx'
+import NewEventPage  from './NewEventPage'
+import EditClubPage  from './EditClubPage'
+import EventPage     from './EventPage'
 
 function App() {
   return (
@@ -18,6 +21,9 @@ function App() {
         <Route path="/clubs"           element={<Clubs />} />
         <Route path="/clubs/new"       element={<NewClub />} />
         <Route path="/clubs/:id"       element={<ClubPage />} />
+        <Route path="/clubs/:id/events/new"              element={<NewEventPage />} />
+        <Route path="/clubs/:id/events/:eventId"         element={<EventPage />} />
+        <Route path="/clubs/:id/edit"                    element={<EditClubPage />} />
       </Routes>
     </BrowserRouter>
   )

@@ -1,0 +1,371 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&display=swap');
+
+.event-page {
+  --green-dark: #0d3d2b;
+  --green-mid:  #145c3e;
+  --gold:       #f5c842;
+  --gold-light: #fde88a;
+  --cream:      #fdf6e3;
+  --red:        #e05c5c;
+  --red-dim:    rgba(224,92,92,0.15);
+  --green-go:   #4caf82;
+  --green-dim:  rgba(76,175,130,0.15);
+
+  font-family: 'DM Sans', sans-serif;
+  background: var(--green-dark);
+  color: var(--cream);
+  min-height: 100vh;
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* ── BG ── */
+.ep-bg-layer {
+  position: fixed; inset: 0;
+  background:
+    radial-gradient(ellipse 80% 60% at 10% 20%, rgba(26,107,72,0.5) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 80% at 90% 80%, rgba(20,92,62,0.4) 0%, transparent 60%);
+  pointer-events: none; z-index: 0;
+}
+
+/* ── Loading ── */
+.ep-loading {
+  display: flex; align-items: center; justify-content: center;
+  min-height: 100vh;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.5rem; letter-spacing: 0.08em;
+  color: rgba(245,200,66,0.5);
+  background: var(--green-dark);
+}
+
+/* ── Navbar ── */
+.ep-navbar {
+  position: sticky; top: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 1rem 3rem;
+  background: rgba(13,61,43,0.85);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(245,200,66,0.15);
+}
+
+.ep-nav-logo {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.8rem; letter-spacing: 0.08em;
+  color: var(--gold); text-decoration: none;
+}
+
+.ep-nav-actions { display: flex; gap: 0.75rem; }
+
+/* ── Main ── */
+.ep-main {
+  position: relative; z-index: 1;
+  padding: 4rem 3rem;
+  max-width: 860px; margin: 0 auto;
+}
+
+/* ── Hero ── */
+.ep-hero {
+  display: flex; gap: 2rem; align-items: flex-start;
+  margin-bottom: 3rem;
+  animation: ep-fadeUp 0.5s ease both;
+}
+
+.ep-hero-date-badge {
+  flex-shrink: 0;
+  width: 68px;
+  display: flex; flex-direction: column; align-items: center;
+  background: rgba(245,200,66,0.1);
+  border: 1px solid rgba(245,200,66,0.25);
+  border-radius: 12px;
+  padding: 0.6rem 0;
+}
+
+.ep-badge-month {
+  font-size: 0.7rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.12em;
+  color: var(--gold);
+}
+
+.ep-badge-day {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 2.6rem; color: var(--gold);
+  line-height: 1;
+}
+
+.ep-hero-content { flex: 1; }
+
+.ep-club-breadcrumb {
+  font-size: 0.78rem; font-weight: 600;
+  text-transform: uppercase; letter-spacing: 0.12em;
+  color: rgba(245,200,66,0.6);
+  text-decoration: none;
+  display: inline-block; margin-bottom: 0.5rem;
+  transition: color 0.2s;
+}
+.ep-club-breadcrumb:hover { color: var(--gold); }
+
+.ep-event-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  color: var(--cream); letter-spacing: 0.04em;
+  line-height: 1; margin: 0 0 1rem;
+}
+
+.ep-event-chips {
+  display: flex; flex-wrap: wrap; gap: 0.5rem;
+}
+
+.ep-chip {
+  display: inline-flex; align-items: center; gap: 0.35rem;
+  font-size: 0.78rem; font-weight: 400;
+  color: rgba(253,246,227,0.55);
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 20px; padding: 0.25rem 0.7rem;
+}
+
+.ep-chip-count {
+  color: var(--gold);
+  background: rgba(245,200,66,0.08);
+  border-color: rgba(245,200,66,0.2);
+}
+
+.ep-hero-cta {
+  flex-shrink: 0;
+  display: flex; flex-direction: column; gap: 0.6rem;
+  padding-top: 0.25rem;
+}
+
+/* ── Divider ── */
+.ep-divider {
+  width: 100%; height: 1px; margin: 0 0 2.5rem;
+  background: linear-gradient(to right, transparent, rgba(245,200,66,0.3), transparent);
+}
+
+/* ── Tabs ── */
+.ep-tabs {
+  display: flex; gap: 0; margin-bottom: 2rem;
+  border-bottom: 1px solid rgba(245,200,66,0.12);
+}
+
+.ep-tab {
+  background: none; border: none; cursor: pointer;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.9rem; font-weight: 500;
+  color: rgba(253,246,227,0.45);
+  padding: 0.6rem 1.4rem;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+  transition: all 0.2s;
+  display: flex; align-items: center; gap: 0.45rem;
+}
+
+.ep-tab:hover { color: rgba(253,246,227,0.75); }
+
+.ep-tab--active {
+  color: var(--gold);
+  border-bottom-color: var(--gold);
+}
+
+.ep-tab-badge {
+  font-size: 0.7rem; font-weight: 700;
+  background: rgba(245,200,66,0.15);
+  color: var(--gold);
+  border-radius: 10px; padding: 0.1rem 0.45rem;
+}
+
+/* ── Details Tab ── */
+.ep-section-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.6rem; letter-spacing: 0.06em;
+  color: var(--cream); margin: 0 0 1rem;
+}
+
+.ep-description {
+  font-size: 0.95rem; font-weight: 300;
+  color: rgba(253,246,227,0.65); line-height: 1.8;
+  max-width: 600px; margin: 0 0 2.5rem;
+}
+
+.ep-empty {
+  color: rgba(253,246,227,0.3); font-size: 0.9rem;
+  padding: 1.5rem 0;
+}
+
+.ep-stats-row {
+  display: flex; gap: 1rem; flex-wrap: wrap;
+  margin-top: 0.5rem;
+}
+
+.ep-stat-card {
+  flex: 1; min-width: 100px;
+  display: flex; flex-direction: column; align-items: center;
+  padding: 1.25rem 1.5rem;
+  background: rgba(20,92,62,0.25);
+  border: 1px solid rgba(245,200,66,0.1);
+  border-radius: 12px;
+  animation: ep-fadeUp 0.5s 0.1s ease both;
+}
+
+.ep-stat-number {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 2.5rem; color: var(--gold); line-height: 1;
+}
+
+.ep-stat-label {
+  font-size: 0.75rem; font-weight: 500;
+  text-transform: uppercase; letter-spacing: 0.1em;
+  color: rgba(253,246,227,0.4);
+  margin-top: 0.25rem;
+}
+
+/* ── Attendance Tab ── */
+.ep-att-header {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 1.5rem;
+}
+
+.ep-att-owner-note {
+  font-size: 0.78rem; color: rgba(253,246,227,0.35);
+  font-style: italic;
+}
+
+.ep-att-list {
+  display: flex; flex-direction: column; gap: 0.6rem;
+}
+
+.ep-att-row {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 1rem;
+  background: rgba(20,92,62,0.2);
+  border: 1px solid rgba(245,200,66,0.08);
+  border-radius: 10px;
+  padding: 0.85rem 1.25rem;
+  animation: ep-fadeUp 0.4s ease both;
+  transition: border-color 0.2s;
+}
+
+.ep-att-row:hover { border-color: rgba(245,200,66,0.2); }
+
+.ep-att-left {
+  display: flex; align-items: center; gap: 0.9rem;
+}
+
+.ep-avatar {
+  width: 40px; height: 40px; border-radius: 50%;
+  overflow: hidden;
+  background: rgba(245,200,66,0.15);
+  border: 1px solid rgba(245,200,66,0.2);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+
+.ep-avatar img { width: 100%; height: 100%; object-fit: cover; }
+
+.ep-avatar span {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1rem; color: var(--gold);
+}
+
+.ep-att-info {
+  display: flex; flex-direction: column; gap: 0.1rem;
+}
+
+.ep-att-name {
+  font-size: 0.9rem; font-weight: 500; color: var(--cream);
+}
+
+.ep-att-email {
+  font-size: 0.75rem; color: rgba(253,246,227,0.35);
+}
+
+.ep-att-right { flex-shrink: 0; }
+
+/* Owner toggle buttons */
+.ep-att-toggle {
+  display: flex; border-radius: 6px; overflow: hidden;
+  border: 1px solid rgba(245,200,66,0.15);
+}
+
+.ep-tog-btn {
+  background: transparent; border: none; cursor: pointer;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.75rem; font-weight: 600;
+  color: rgba(253,246,227,0.4);
+  padding: 0.35rem 0.75rem;
+  transition: all 0.15s;
+}
+
+.ep-tog-btn:not(:last-child) {
+  border-right: 1px solid rgba(245,200,66,0.15);
+}
+
+.ep-tog--present {
+  background: var(--green-dim);
+  color: var(--green-go);
+}
+
+.ep-tog--absent {
+  background: var(--red-dim);
+  color: var(--red);
+}
+
+/* Non-owner status pill */
+.ep-status-pill {
+  font-size: 0.75rem; font-weight: 600;
+  border-radius: 20px; padding: 0.25rem 0.75rem;
+}
+
+.ep-pill--going {
+  background: var(--green-dim);
+  color: var(--green-go);
+}
+
+.ep-pill--absent {
+  background: var(--red-dim);
+  color: var(--red);
+}
+
+/* Export button */
+.ep-export-btn {
+  margin-top: 1.5rem;
+  font-size: 0.82rem;
+}
+
+/* ── Buttons (shared with ClubPage system) ── */
+.event-page .btn {
+  padding: 0.5rem 1.25rem; border-radius: 6px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.85rem; font-weight: 600;
+  cursor: pointer; transition: all 0.2s ease;
+  text-decoration: none; display: inline-block;
+  text-align: center;
+}
+.event-page .btn-lg { padding: 0.75rem 1.75rem; font-size: 0.95rem; border-radius: 8px; }
+.event-page .btn-outline {
+  background: transparent; border: 1.5px solid var(--gold); color: var(--gold);
+}
+.event-page .btn-outline:hover { background: rgba(245,200,66,0.1); }
+.event-page .btn-solid {
+  background: var(--gold); border: 1.5px solid var(--gold); color: var(--green-dark);
+}
+.event-page .btn-solid:hover { background: var(--gold-light); }
+.event-page .btn-ghost {
+  background: transparent; border: 1.5px solid rgba(253,246,227,0.2); color: rgba(253,246,227,0.5);
+}
+.event-page .btn-ghost:hover { border-color: rgba(253,246,227,0.4); color: var(--cream); }
+
+/* ── Animation ── */
+@keyframes ep-fadeUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Mobile ── */
+@media (max-width: 640px) {
+  .ep-navbar { padding: 1rem 1.25rem; }
+  .ep-main   { padding: 2rem 1.25rem; }
+  .ep-hero   { flex-direction: column; }
+  .ep-hero-cta { flex-direction: row; }
+  .ep-tabs   { overflow-x: auto; }
+}
