@@ -263,3 +263,405 @@
   font-size: 0.8rem;
   opacity: 0.5;
 }
+
+/* ── Paste into ClubPage.css ── */
+
+.club-tabs {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 28px;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  padding-bottom: 0;
+}
+
+.club-tab {
+  background: none;
+  border: none;
+  color: rgba(255,255,255,0.45);
+  font-size: 0.95rem;
+  font-weight: 500;
+  padding: 10px 18px;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+  transition: color 0.2s, border-color 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.club-tab:hover { color: rgba(255,255,255,0.75); }
+
+.club-tab--active {
+  color: #fff;
+  border-bottom-color: #fff;
+}
+
+.club-tab-badge {
+  background: rgba(255,255,255,0.15);
+  color: #fff;
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 1px 7px;
+  border-radius: 999px;
+}
+
+/* Feed / Announcements */
+.club-feed { max-width: 680px; }
+
+.ann-composer {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 16px;
+  padding: 16px;
+  margin-bottom: 24px;
+}
+
+.ann-input {
+  width: 100%;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: #fff;
+  font-size: 0.95rem;
+  resize: none;
+  font-family: inherit;
+  line-height: 1.5;
+}
+
+.ann-input::placeholder { color: rgba(255,255,255,0.3); }
+
+.ann-composer-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid rgba(255,255,255,0.08);
+}
+
+.ann-list { display: flex; flex-direction: column; gap: 14px; }
+
+.ann-post {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 16px;
+  padding: 18px 20px;
+  transition: background 0.2s;
+}
+
+.ann-post:hover { background: rgba(255,255,255,0.06); }
+
+.ann-post-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.ann-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.12);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #fff;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.ann-avatar img { width: 100%; height: 100%; object-fit: cover; }
+
+.ann-post-meta { display: flex; flex-direction: column; flex: 1; }
+
+.ann-post-author { font-size: 0.88rem; font-weight: 600; color: #fff; }
+
+.ann-post-time { font-size: 0.78rem; color: rgba(255,255,255,0.4); }
+
+.ann-delete-btn {
+  background: none;
+  border: none;
+  color: rgba(255,255,255,0.25);
+  cursor: pointer;
+  font-size: 0.85rem;
+  padding: 4px 8px;
+  border-radius: 6px;
+  transition: color 0.2s, background 0.2s;
+}
+
+.ann-delete-btn:hover {
+  color: #ff6b6b;
+  background: rgba(255, 107, 107, 0.1);
+}
+
+.ann-post-content {
+  font-size: 0.93rem;
+  color: rgba(255,255,255,0.8);
+  line-height: 1.6;
+  margin: 0;
+  white-space: pre-wrap;
+}
+
+/* Calendar */
+.club-calendar-tab { }
+
+.cal-add-event {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 20px;
+}
+
+.club-calendar { }
+
+.cal-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.cal-month-label {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #fff;
+}
+
+.cal-nav-btn {
+  background: rgba(255,255,255,0.08);
+  border: none;
+  color: #fff;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+}
+
+.cal-nav-btn:hover { background: rgba(255,255,255,0.14); }
+
+.cal-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+  margin-bottom: 32px;
+}
+
+.cal-day-header {
+  text-align: center;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: rgba(255,255,255,0.35);
+  padding: 6px 0;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.cal-cell {
+  min-height: 72px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 10px;
+  padding: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.cal-cell--empty {
+  background: transparent;
+  border-color: transparent;
+}
+
+.cal-cell--today {
+  border-color: rgba(255,255,255,0.3);
+  background: rgba(255,255,255,0.07);
+}
+
+.cal-cell--has-event {
+  border-color: rgba(120,180,255,0.3);
+  background: rgba(120,180,255,0.05);
+}
+
+.cal-day-num {
+  font-size: 0.78rem;
+  color: rgba(255,255,255,0.5);
+  font-weight: 500;
+}
+
+.cal-cell--today .cal-day-num {
+  color: #fff;
+  font-weight: 700;
+}
+
+.cal-event-chip {
+  background: rgba(120,180,255,0.2);
+  color: rgba(180,220,255,0.9);
+  font-size: 0.65rem;
+  font-weight: 600;
+  padding: 2px 5px;
+  border-radius: 4px;
+  text-decoration: none;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: block;
+  transition: background 0.2s;
+}
+
+.cal-event-chip:hover { background: rgba(120,180,255,0.35); }
+
+.cal-upcoming-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #fff;
+  margin: 0 0 16px;
+}
+
+
+/* ── Paste into Dashboard.css ── */
+
+.dash-feed {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin-bottom: 40px;
+}
+
+@media (max-width: 768px) {
+  .dash-feed { grid-template-columns: 1fr; }
+}
+
+.dash-events-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.dash-event-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 12px;
+  padding: 12px 14px;
+  text-decoration: none;
+  color: inherit;
+  transition: background 0.2s;
+}
+
+.dash-event-row:hover { background: rgba(255,255,255,0.07); }
+
+.dash-event-date-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255,255,255,0.08);
+  border-radius: 10px;
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
+}
+
+.dash-event-month {
+  font-size: 0.6rem;
+  font-weight: 700;
+  color: rgba(255,255,255,0.5);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.dash-event-day {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #fff;
+  line-height: 1;
+}
+
+.dash-event-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.dash-event-title {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: #fff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.dash-event-club {
+  font-size: 0.75rem;
+  color: rgba(255,255,255,0.45);
+}
+
+.dash-event-meta {
+  font-size: 0.72rem;
+  color: rgba(255,255,255,0.35);
+}
+
+.dash-announcements-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.dash-announcement-row {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 12px;
+  padding: 12px 14px;
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  transition: background 0.2s;
+}
+
+.dash-announcement-row:hover { background: rgba(255,255,255,0.07); }
+
+.dash-ann-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+}
+
+.dash-ann-club {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: rgba(255,255,255,0.6);
+}
+
+.dash-ann-time {
+  font-size: 0.72rem;
+  color: rgba(255,255,255,0.3);
+}
+
+.dash-ann-content {
+  font-size: 0.88rem;
+  color: rgba(255,255,255,0.75);
+  line-height: 1.5;
+  margin: 0 0 4px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.dash-ann-author {
+  font-size: 0.72rem;
+  color: rgba(255,255,255,0.3);
+}

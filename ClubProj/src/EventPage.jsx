@@ -2,22 +2,25 @@ import { useState, useEffect } from 'react'
 import { Link, useParams, useNavigate } from 'react-router-dom'
 import { supabase } from './lib/supabase'
 import { useAuth } from './useAuth'
+import { useClubRole } from './Useclubrole'
 import './EventPage.css'
 
 export default function EventPage() {
-  const { clubId, eventId } = useParams()
+  const { id: clubId, eventId } = useParams()
   const { user } = useAuth()
   const navigate = useNavigate()
 
-  const [event, setEvent]           = useState(null)
-  const [club, setClub]             = useState(null)
-  const [attendees, setAttendees]   = useState([])
-  const [isGoing, setIsGoing]       = useState(false)
-  const [loading, setLoading]       = useState(true)
-  const [rsvping, setRsvping]       = useState(false)
-  const [error, setError]           = useState(null)
-  const [activeTab, setActiveTab]   = useState('details') // 'details' | 'attendance'
-  const [isOwner, setIsOwner]       = useState(false)
+  const [event, setEvent]         = useState(null)
+  const [club, setClub]           = useState(null)
+  const [attendees, setAttendees] = useState([])
+  const [isGoing, setIsGoing]     = useState(false)
+  const [loading, setLoading]     = useState(true)
+  const [rsvping, setRsvping]     = useState(false)
+  const [error, setError]         = useState(null)
+  const [activeTab, setActiveTab] = useState('details')
+
+  const { isOfficer, isAdmin } = useClubRole(clubId, club?.created_by)
+  const canManageAttendance = isOfficer || isAdmin
 
   useEffect(() => { fetchAll() }, [eventId, user])
 
@@ -25,32 +28,19 @@ export default function EventPage() {
     setLoading(true)
 
     const { data: eventData, error: eventErr } = await supabase
-      .from('events')
-      .select('*')
-      .eq('id', eventId)
-      .single()
-
+      .from('events').select('*').eq('id', eventId).single()
     if (eventErr) { setError('Event not found.'); setLoading(false); return }
     setEvent(eventData)
 
     const { data: clubData } = await supabase
-      .from('clubs')
-      .select('id, name, created_by')
-      .eq('id', eventData.club_id)
-      .single()
-
+      .from('clubs').select('id, name, created_by').eq('id', eventData.club_id).single()
     setClub(clubData)
-    if (user && clubData) setIsOwner(user.id === clubData.created_by)
 
     await fetchAttendees(eventData.id)
 
     if (user) {
       const { data: rsvpData } = await supabase
-        .from('event_rsvps')
-        .select('id')
-        .eq('event_id', eventId)
-        .eq('user_id', user.id)
-        .single()
+        .from('event_rsvps').select('id').eq('event_id', eventId).eq('user_id', user.id).single()
       setIsGoing(!!rsvpData)
     }
 
@@ -58,30 +48,37 @@ export default function EventPage() {
   }
 
   async function fetchAttendees(eid) {
-    const { data } = await supabase
-      .from('event_rsvps')
-      .select('id, user_id, created_at, status, profiles(full_name, avatar_url, email)')
-      .eq('event_id', eid || eventId)
-      .order('created_at', { ascending: true })
+    // In your Dashboard component's fetch function
+const { data: rsvps } = await supabase
+    .from('event_rsvps')
+    .select(`
+      id,
+      status,
+      events (
+        id,
+        title,
+        date,
+        location,
+        club_id,
+        clubs ( name )
+      )
+    `)
+    .eq('user_id', user.id)
+    .neq('status', 'absent')   // only show events they're going to
+    .order('created_at', { ascending: false })
     setAttendees(data || [])
   }
 
   async function handleRsvp() {
     if (!user) { navigate('/login'); return }
     setRsvping(true)
-
     if (isGoing) {
-      await supabase.from('event_rsvps')
-        .delete()
-        .eq('event_id', eventId)
-        .eq('user_id', user.id)
+      await supabase.from('event_rsvps').delete().eq('event_id', eventId).eq('user_id', user.id)
       setIsGoing(false)
     } else {
-      await supabase.from('event_rsvps')
-        .insert({ event_id: eventId, user_id: user.id, status: 'going' })
+      await supabase.from('event_rsvps').insert({ event_id: eventId, user_id: user.id, status: 'going' })
       setIsGoing(true)
     }
-
     await fetchAttendees()
     setRsvping(false)
   }
@@ -93,15 +90,12 @@ export default function EventPage() {
 
   function formatDate(dateStr) {
     if (!dateStr) return 'TBD'
-    return new Date(dateStr).toLocaleDateString('en-US', {
-      weekday: 'long', month: 'long', day: 'numeric', year: 'numeric',
-    })
+    return new Date(dateStr).toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' })
   }
 
   function formatTime(dateStr) {
     if (!dateStr) return ''
-    const d = new Date(dateStr)
-    return d.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' })
+    return new Date(dateStr).toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' })
   }
 
   function getInitials(name) {
@@ -109,8 +103,8 @@ export default function EventPage() {
     return name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2)
   }
 
-  const goingCount   = attendees.filter(a => a.status !== 'absent').length
-  const absentCount  = attendees.filter(a => a.status === 'absent').length
+  const goingCount  = attendees.filter(a => a.status !== 'absent').length
+  const absentCount = attendees.filter(a => a.status === 'absent').length
 
   if (loading) return <div className="ep-loading"><span>Loading…</span></div>
   if (error)   return <div className="ep-loading"><span>{error}</span></div>
@@ -119,7 +113,6 @@ export default function EventPage() {
     <div className="event-page">
       <div className="ep-bg-layer" />
 
-      {/* Navbar */}
       <nav className="ep-navbar">
         <Link to="/" className="ep-nav-logo">ClubHub</Link>
         <div className="ep-nav-actions">
@@ -129,8 +122,6 @@ export default function EventPage() {
       </nav>
 
       <main className="ep-main">
-
-        {/* Hero Banner */}
         <div className="ep-hero">
           <div className="ep-hero-date-badge">
             <span className="ep-badge-month">
@@ -142,11 +133,7 @@ export default function EventPage() {
           </div>
 
           <div className="ep-hero-content">
-            {club && (
-              <Link to={`/clubs/${club.id}`} className="ep-club-breadcrumb">
-                {club.name}
-              </Link>
-            )}
+            {club && <Link to={`/clubs/${club.id}`} className="ep-club-breadcrumb">{club.name}</Link>}
             <h1 className="ep-event-title">{event.title}</h1>
             <div className="ep-event-chips">
               {event.date && (
@@ -182,7 +169,7 @@ export default function EventPage() {
             >
               {rsvping ? '…' : isGoing ? '✓ Going' : 'RSVP'}
             </button>
-            {isOwner && (
+            {isAdmin && (
               <Link to={`/clubs/${event.club_id}/events/${eventId}/edit`} className="btn btn-ghost btn-lg">
                 Edit Event
               </Link>
@@ -192,22 +179,15 @@ export default function EventPage() {
 
         <div className="ep-divider" />
 
-        {/* Tabs */}
         <div className="ep-tabs">
-          <button
-            className={`ep-tab ${activeTab === 'details' ? 'ep-tab--active' : ''}`}
-            onClick={() => setActiveTab('details')}
-          >Details</button>
-          <button
-            className={`ep-tab ${activeTab === 'attendance' ? 'ep-tab--active' : ''}`}
-            onClick={() => setActiveTab('attendance')}
-          >
-            Attendance
-            <span className="ep-tab-badge">{attendees.length}</span>
+          <button className={`ep-tab ${activeTab === 'details' ? 'ep-tab--active' : ''}`} onClick={() => setActiveTab('details')}>
+            Details
+          </button>
+          <button className={`ep-tab ${activeTab === 'attendance' ? 'ep-tab--active' : ''}`} onClick={() => setActiveTab('attendance')}>
+            Attendance <span className="ep-tab-badge">{attendees.length}</span>
           </button>
         </div>
 
-        {/* Tab: Details */}
         {activeTab === 'details' && (
           <div className="ep-details">
             {event.description ? (
@@ -218,8 +198,6 @@ export default function EventPage() {
             ) : (
               <p className="ep-empty">No description provided.</p>
             )}
-
-            {/* Quick stats row */}
             <div className="ep-stats-row">
               <div className="ep-stat-card">
                 <span className="ep-stat-number">{attendees.length}</span>
@@ -229,7 +207,7 @@ export default function EventPage() {
                 <span className="ep-stat-number">{goingCount}</span>
                 <span className="ep-stat-label">Going</span>
               </div>
-              {isOwner && (
+              {canManageAttendance && (
                 <div className="ep-stat-card">
                   <span className="ep-stat-number">{absentCount}</span>
                   <span className="ep-stat-label">Absent</span>
@@ -239,15 +217,12 @@ export default function EventPage() {
           </div>
         )}
 
-        {/* Tab: Attendance */}
         {activeTab === 'attendance' && (
           <div className="ep-attendance">
             <div className="ep-att-header">
               <h2 className="ep-section-title">Attendance</h2>
-              {isOwner && (
-                <span className="ep-att-owner-note">
-                  You can mark attendance below
-                </span>
+              {canManageAttendance && (
+                <span className="ep-att-owner-note">Mark attendance below</span>
               )}
             </div>
 
@@ -257,18 +232,15 @@ export default function EventPage() {
               <div className="ep-att-list">
                 {attendees.map((a, i) => {
                   const profile = a.profiles
-                  const name  = profile?.full_name || profile?.email || 'Unknown'
-                  const email = profile?.email || ''
-                  const avatar = profile?.avatar_url
+                  const name    = profile?.full_name || profile?.email || 'Unknown'
+                  const email   = profile?.email || ''
+                  const avatar  = profile?.avatar_url
 
                   return (
                     <div className="ep-att-row" key={a.id} style={{ animationDelay: `${i * 0.04}s` }}>
                       <div className="ep-att-left">
                         <div className="ep-avatar">
-                          {avatar
-                            ? <img src={avatar} alt={name} />
-                            : <span>{getInitials(name)}</span>
-                          }
+                          {avatar ? <img src={avatar} alt={name} /> : <span>{getInitials(name)}</span>}
                         </div>
                         <div className="ep-att-info">
                           <span className="ep-att-name">{name}</span>
@@ -277,17 +249,15 @@ export default function EventPage() {
                       </div>
 
                       <div className="ep-att-right">
-                        {isOwner ? (
+                        {canManageAttendance ? (
                           <div className="ep-att-toggle">
                             <button
                               className={`ep-tog-btn ${a.status !== 'absent' ? 'ep-tog--present' : ''}`}
                               onClick={() => updateAttendeeStatus(a.id, 'going')}
-                              title="Mark present"
                             >Present</button>
                             <button
                               className={`ep-tog-btn ${a.status === 'absent' ? 'ep-tog--absent' : ''}`}
                               onClick={() => updateAttendeeStatus(a.id, 'absent')}
-                              title="Mark absent"
                             >Absent</button>
                           </div>
                         ) : (
@@ -302,15 +272,13 @@ export default function EventPage() {
               </div>
             )}
 
-            {/* Export for owner */}
-            {isOwner && attendees.length > 0 && (
+            {canManageAttendance && attendees.length > 0 && (
               <button className="btn btn-outline ep-export-btn" onClick={() => exportCSV(attendees, event)}>
                 ↓ Export CSV
               </button>
             )}
           </div>
         )}
-
       </main>
     </div>
   )
@@ -326,7 +294,7 @@ function exportCSV(attendees, event) {
       new Date(a.created_at).toLocaleDateString(),
     ])
   ]
-  const csv = rows.map(r => r.join(',')).join('\n')
+  const csv  = rows.map(r => r.join(',')).join('\n')
   const blob = new Blob([csv], { type: 'text/csv' })
   const url  = URL.createObjectURL(blob)
   const a    = document.createElement('a')
